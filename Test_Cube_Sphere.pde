@@ -215,16 +215,41 @@ void saveCombinedFaces() {
   finalImg.beginDraw();
   finalImg.background(25);
   finalImg.imageMode(CENTER);
-  finalImg.image(faces[0], r*3, r*1);
-  finalImg.image(faces[3], r*5, r*5);
   finalImg.image(faces[1], r*1, r*3);
   finalImg.image(faces[2], r*3, r*3);
   finalImg.image(faces[4], r*5, r*3);
   finalImg.image(faces[5], r*7, r*3);
-
+  finalImg.image(faces[0], r*3, r*1);
+  finalImg.image(faces[3], r*5, r*5);
+  
+  finalImg.save("Faces\\face_combined_square.jpeg");
+  
+  
+  finalImg.image(rotateImage(faces[0],3), r*1, r*1);
+  finalImg.image(rotateImage(faces[0],1), r*5, r*1);
+  finalImg.image(rotateImage(faces[0],2), r*7, r*1);
+  
+  finalImg.image(rotateImage(faces[3],2), r*1, r*5);
+  finalImg.image(rotateImage(faces[3],1), r*3, r*5);
+  finalImg.image(rotateImage(faces[3],3), r*7, r*5);
+  
+  triangles(finalImg);
+  
+  finalImg.save("Faces\\face_combined_triangles.jpeg");
   finalImg.endDraw();
-  finalImg.save("Faces\\face_combined.jpeg");
+  //finalImg.save("Faces\\face_combined.jpeg");
   //}
+}
+
+void triangles(PGraphics pg) {
+  pg.noStroke();
+  pg.fill(25);
+  int r = resolution+1;
+  
+  for(int i = 0; i < 5; i++) {
+    pg.triangle(i*r, r, (i+1)*r, 0, (i-1)*r, 0);
+    pg.triangle(i*r, r*2, (i+1)*r, 3*r, (i-1)*r, 3*r);
+  }
 }
 
 //void saveCombinedFaces() {
