@@ -173,20 +173,20 @@ void renderFaces() {
         switch(s) {
         case 0:
           faces[s].pixels[index] = color((cube[s][x][resolution-y].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x,y,resolution,s)][rotGridY(x,resolution-y,resolution,s)].mag()-size)/heightMultiplier);
+          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;    //pole
         case 1:
           faces[s].pixels[index] = color((cube[s][resolution-x][y].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x,y,resolution,s)][rotGridY(x,resolution-y,resolution,s)].mag()-size)/heightMultiplier);
+          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;
         case 2:
           faces[s].pixels[index] = color((cube[s][x][y].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x,y,resolution,s)][rotGridY(x,resolution-y,resolution,s)].mag()-size)/heightMultiplier);
+          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;
         case 3:
           //faces[s].pixels[index] = color((cube[s][resolution-y][x].mag()-size)/heightMultiplier);
-          faces[s].pixels[index] = color((cube[s][rotGridX(x,y,resolution,1)][rotGridY(x,y,resolution,1)].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x,y,resolution,s)][rotGridY(x,resolution-y,resolution,s)].mag()-size)/heightMultiplier);
+          faces[s].pixels[index] = color((cube[s][rotGridX(x, y, resolution, 1)][rotGridY(x, y, resolution, 1)].mag()-size)/heightMultiplier);
+          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;    //pole
         case 4:
           faces[s].pixels[index] = color((cube[s][x][y].mag()-size)/heightMultiplier);
@@ -221,6 +221,7 @@ void saveCombinedFaces() {
   finalImg.image(faces[2], r*3, r*3);
   finalImg.image(faces[4], r*5, r*3);
   finalImg.image(faces[5], r*7, r*3);
+
   finalImg.endDraw();
   finalImg.save("Faces\\face_combined.jpeg");
   //}
@@ -243,6 +244,55 @@ void saveCombinedFaces() {
 //  finalImg.endDraw();
 //  finalImg.save("Test_Faces\\face_combined_"+i+".jpeg");
 //  //}
+//}
+
+//PImage rotateImage(PImage img, int rotationID) {
+//  color[][] dummy;
+//  PImage out;
+//  int index = 0;
+//  img.loadPixels();
+
+//  if (rotationID == 1 || rotationID == 3) {
+//    dummy = new color[img.height][img.width];
+//    out = createImage(img.height, img.width, RGB);
+//  } else if (rotationID == 2) {
+//    dummy = new color[img.width][img.height];
+//    out = createImage(img.width, img.height, RGB);
+//  } else {
+//    if (rotationID != 0) {
+//      println("ERROR with 'rotateImage'. The rotationID ("+rotationID+") is invalid");
+//    }
+//    return img;
+//  }
+
+//  for (int r = 0; r < img.height; r++) {
+//    for (int c = 0; c < img.width; c++) {
+//      switch(rotationID) {
+//      case 1:
+//        dummy[img.height-r-1][c] = img.pixels[index];
+//        break;
+//      case 2:
+//        dummy[img.width-c-1][img.width-r-1] = img.pixels[index];
+//        break;
+//      case 3:
+//        dummy[r][img.height-c-1] = img.pixels[index];
+//        break;
+//      }
+//      index++;
+//    }
+//  }
+//  img.updatePixels();
+  
+//  out.loadPixels();
+//  index++;
+//  for (int r = 0; r < out.height; r++) {
+//    for (int c = 0; c < out.width; c++) {
+//      out.pixels[index] = dummy[c][r];
+//    }
+//  }
+//  out.updatePixels();
+
+//  return out;
 //}
 
 int rotGridX(int x, int y, int gridSize, int rot) {    //rot is the rotation amount (0 is normal, 1 is 90 deg cw, 2 is 180 deg, and 3 is 90 deg ccw
