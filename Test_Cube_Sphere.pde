@@ -19,7 +19,7 @@ PImage[][] poleFaces;
 void setup() {
   size(1000, 1000, P3D);
   angle = new PVector();
-  heightMap = loadImage("BW Projected Alisesh Map_4.png");
+  heightMap = loadImage("BW Projected Alisesh Map_5.png");
 
   getShapeCoords();
 }
@@ -200,9 +200,9 @@ void renderFaces() {
       }
     }
     faces[s].updatePixels();
-    faces[s].save("Faces\\face_"+s+".jpeg");
+    faces[s].save("Faces\\face_"+s+".png");
     if (s <4) {
-      test[s].save("Test_Faces\\rot_"+s+".jpeg");
+      test[s].save("Test_Faces\\rot_"+s+".png");
     }
   }
   saveCombinedFaces();
@@ -213,7 +213,7 @@ void saveCombinedFaces() {
   PGraphics finalImg = createGraphics(r*8, r*6);
   //for (int i = 0; i < 4; i++) {
   finalImg.beginDraw();
-  finalImg.background(25);
+  finalImg.background(25,25,0);
   finalImg.imageMode(CENTER);
   finalImg.image(faces[1], r*1, r*3);
   finalImg.image(faces[2], r*3, r*3);
@@ -222,7 +222,7 @@ void saveCombinedFaces() {
   finalImg.image(faces[0], r*3, r*1);
   finalImg.image(faces[3], r*5, r*5);
   
-  finalImg.save("Faces\\face_combined_square.jpeg");
+  finalImg.save("Faces\\face_combined_square.png");
   
   
   finalImg.image(rotateImage(faces[0],3), r*1, r*1);
@@ -235,7 +235,7 @@ void saveCombinedFaces() {
   
   triangles(finalImg);
   
-  finalImg.save("Faces\\face_combined_triangles.jpeg");
+  finalImg.save("Faces\\face_combined_triangles.png");
   finalImg.endDraw();
   //finalImg.save("Faces\\face_combined.jpeg");
   //}
@@ -243,12 +243,12 @@ void saveCombinedFaces() {
 
 void triangles(PGraphics pg) {
   pg.noStroke();
-  pg.fill(25);
+  pg.fill(25,25,0);
   int r = resolution+1;
   
   for(int i = 0; i < 5; i++) {
-    pg.triangle(i*r, r, (i+1)*r, 0, (i-1)*r, 0);
-    pg.triangle(i*r, r*2, (i+1)*r, 3*r, (i-1)*r, 3*r);
+    pg.triangle(i*r, r-1, (i+1)*r, 0-1, (i-1)*r, 0-1);
+    pg.triangle(i*r, r*2+1, (i+1)*r, 3*r+1, (i-1)*r, 3*r+1);
   }
 }
 
