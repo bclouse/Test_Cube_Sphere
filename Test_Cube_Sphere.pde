@@ -97,115 +97,79 @@ void draw() {
   //noLoop();
 }
 
-//void renderFaces() {
-//  faces = new PImage[4];
-//  poleFaces = new PImage[2][4];
-//  int index;
-
-//  for (int s = 0; s < 4; s++) {
-//    poleFaces[0][s] = createImage(resolution+1, resolution+1, RGB);
-//    poleFaces[1][s] = createImage(resolution+1, resolution+1, RGB);
-//    faces[s] = createImage(resolution+1, resolution+1, RGB);
-//    poleFaces[0][s].loadPixels();
-//    poleFaces[0][s].loadPixels();
-//    faces[s].loadPixels();
-
-//    index = 0;
-//    for (int y = 0; y < resolution+1; y++) {
-//      for (int x = 0; x < resolution+1; x++) {
-//        if(index == 100500) {
-//          println(x+", "+y+", "+resolution);
-//          println(rotGridX(x,y,resolution,1));
-//          println(rotGridX(x,y,resolution,1));
-//        }
-//        switch(s) {
-//          //case 0: faces[s].pixels[index] = color((cube[s][x][resolution-y].mag()-size)/heightMultiplier); break;    //pole
-//          //case 3: faces[s].pixels[index] = color((cube[s][resolution-y][x].mag()-size)/heightMultiplier); break;    //pole
-//        case 0:
-//          faces[s].pixels[index] = color((cube[1][resolution-x][y].mag()-size)/heightMultiplier);
-//          poleFaces[0][s].pixels[index] = color((cube[0][rotGridX(x,resolution-y,resolution,3)][rotGridX(x,resolution-y,resolution,3)].mag()-size)/heightMultiplier);
-//          poleFaces[1][s].pixels[index] = color((cube[3][rotGridX(x,y,resolution,1)][rotGridX(x,y,resolution,1)].mag()-size)/heightMultiplier);
-//          break;
-//        case 1:
-//          faces[s].pixels[index] = color((cube[2][x][y].mag()-size)/heightMultiplier);
-//          poleFaces[0][s].pixels[index] = color((cube[0][rotGridX(x,resolution-y,resolution,0)][rotGridX(x,resolution-y,resolution,0)].mag()-size)/heightMultiplier);
-//          poleFaces[1][s].pixels[index] = color((cube[3][rotGridX(x,y,resolution,0)][rotGridX(x,y,resolution,0)].mag()-size)/heightMultiplier);
-//          break;
-//        case 2:
-//          faces[s].pixels[index] = color((cube[4][x][y].mag()-size)/heightMultiplier);
-//          poleFaces[0][s].pixels[index] = color((cube[0][rotGridX(x,resolution-y,resolution,1)][rotGridX(x,resolution-y,resolution,1)].mag()-size)/heightMultiplier);
-//          poleFaces[1][s].pixels[index] = color((cube[3][rotGridX(x,y,resolution,3)][rotGridX(x,y,resolution,3)].mag()-size)/heightMultiplier);
-//          break;
-//        case 3:
-//          faces[s].pixels[index] = color((cube[5][resolution-x][y].mag()-size)/heightMultiplier);
-//          poleFaces[0][s].pixels[index] = color((cube[0][rotGridX(x,resolution-y,resolution,2)][rotGridX(x,resolution-y,resolution,2)].mag()-size)/heightMultiplier);
-//          poleFaces[1][s].pixels[index] = color((cube[3][rotGridX(x,y,resolution,2)][rotGridX(x,y,resolution,2)].mag()-size)/heightMultiplier);
-//          break;
-//        }
-
-//        index++;
-//      }
-//    }
-//    faces[s].updatePixels();
-//    faces[s].save("Test_Faces\\face_"+s+".jpeg");
-//  }
-//  poleFaces[0][1].save("Test_Faces\\pole_0.jpeg");
-//  poleFaces[1][1].save("Test_Faces\\pole_1.jpeg");
-//  saveCombinedFaces();
-//}
-
 void renderFaces() {
   faces = new PImage[6];
-  PImage [] test = new PImage[4];
+  //PImage [] test = new PImage[4];
   int index;
+  float value = 0;
+  float max = 0;
 
   for (int s = 0; s < 6; s++) {
     faces[s] = createImage(resolution+1, resolution+1, RGB);
     faces[s].loadPixels();
-    if (s < 4) {
-      test[s] = createImage(resolution+1, resolution+1, RGB);
-      test[s].loadPixels();
-    }
+    //if (s < 4) {
+    //  test[s] = createImage(resolution+1, resolution+1, RGB);
+    //  test[s].loadPixels();
+    //}
 
     index = 0;
     for (int y = 0; y < resolution+1; y++) {
       for (int x = 0; x < resolution+1; x++) {
         switch(s) {
         case 0:
-          faces[s].pixels[index] = color((cube[s][x][resolution-y].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
+          value = (cube[s][x][resolution-y].mag()-size)/heightMultiplier;
+          //if (value > 1) {
+          //  value += waterHeight;
+          //}
+          faces[s].pixels[index] = color(value);
+          //if(x%100 == 0) {
+          //  print(red(faces[s].pixels[index])+" ");
+          //}
+          //test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;    //pole
         case 1:
-          faces[s].pixels[index] = color((cube[s][resolution-x][y].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
+          value = (cube[s][resolution-x][y].mag()-size)/heightMultiplier;
+          faces[s].pixels[index] = color(value);
+          //test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;
         case 2:
-          faces[s].pixels[index] = color((cube[s][x][y].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
+          value = (cube[s][x][y].mag()-size)/heightMultiplier;
+          faces[s].pixels[index] = color(value);
+          //test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;
         case 3:
-          //faces[s].pixels[index] = color((cube[s][resolution-y][x].mag()-size)/heightMultiplier);
-          faces[s].pixels[index] = color((cube[s][rotGridX(x, y, resolution, 1)][rotGridY(x, y, resolution, 1)].mag()-size)/heightMultiplier);
-          test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
+          value = (cube[s][rotGridX(x, y, resolution, 1)][rotGridY(x, y, resolution, 1)].mag()-size)/heightMultiplier;
+          faces[s].pixels[index] = color(value);
+          //test[s].pixels[index] = color((cube[0][rotGridX(x, y, resolution, s)][rotGridY(x, resolution-y, resolution, s)].mag()-size)/heightMultiplier);
           break;    //pole
         case 4:
-          faces[s].pixels[index] = color((cube[s][x][y].mag()-size)/heightMultiplier);
+          value = (cube[s][x][y].mag()-size)/heightMultiplier;
+          faces[s].pixels[index] = color(value);
           break;
         case 5:
-          faces[s].pixels[index] = color((cube[s][resolution-x][y].mag()-size)/heightMultiplier);
+          value = (cube[s][resolution-x][y].mag()-size)/heightMultiplier;
+          faces[s].pixels[index] = color(value);
           break;
+        }
+        faces[s].pixels[index] = color(value*255/157.6);
+        if (value > max) {
+          max = value;
         }
 
         index++;
       }
+      //if (y%100 == 0 && s == 0) {
+      //  print("\n");
+      //}
     }
     faces[s].updatePixels();
     faces[s].save("Faces\\face_"+s+".png");
-    if (s <4) {
-      test[s].save("Test_Faces\\rot_"+s+".png");
-    }
+    //if (s <4) {
+    //  test[s].save("Test_Faces\\rot_"+s+".png");
+    //}
   }
   saveCombinedFaces();
+  println(max);
 }
 
 void saveCombinedFaces() {
@@ -213,7 +177,7 @@ void saveCombinedFaces() {
   PGraphics finalImg = createGraphics(r*8, r*6);
   //for (int i = 0; i < 4; i++) {
   finalImg.beginDraw();
-  finalImg.background(25,25,0);
+  finalImg.background(25, 25, 0);
   finalImg.imageMode(CENTER);
   finalImg.image(faces[1], r*1, r*3);
   finalImg.image(faces[2], r*3, r*3);
@@ -221,150 +185,36 @@ void saveCombinedFaces() {
   finalImg.image(faces[5], r*7, r*3);
   finalImg.image(faces[0], r*3, r*1);
   finalImg.image(faces[3], r*5, r*5);
-  
+
   finalImg.save("Faces\\face_combined_square.png");
+
+
+  finalImg.image(rotateImage(faces[0], 3), r*1, r*1);
+  finalImg.image(rotateImage(faces[0], 1), r*5, r*1);
+  finalImg.image(rotateImage(faces[0], 2), r*7, r*1);
+
+  finalImg.image(rotateImage(faces[3], 2), r*1, r*5);
+  finalImg.image(rotateImage(faces[3], 1), r*3, r*5);
+  finalImg.image(rotateImage(faces[3], 3), r*7, r*5);
   
-  
-  finalImg.image(rotateImage(faces[0],3), r*1, r*1);
-  finalImg.image(rotateImage(faces[0],1), r*5, r*1);
-  finalImg.image(rotateImage(faces[0],2), r*7, r*1);
-  
-  finalImg.image(rotateImage(faces[3],2), r*1, r*5);
-  finalImg.image(rotateImage(faces[3],1), r*3, r*5);
-  finalImg.image(rotateImage(faces[3],3), r*7, r*5);
-  
+  finalImg.save("Faces\\face_combined.png");
+
   triangles(finalImg);
-  
+
   finalImg.save("Faces\\face_combined_triangles.png");
   finalImg.endDraw();
-  //finalImg.save("Faces\\face_combined.jpeg");
   //}
 }
 
 void triangles(PGraphics pg) {
   pg.noStroke();
-  pg.fill(25,25,0);
+  pg.fill(25, 25, 0);
   int r = resolution+1;
-  
-  for(int i = 0; i < 5; i++) {
+
+  for (int i = 0; i < 5; i++) {
     pg.triangle(i*r, r-1, (i+1)*r, 0-1, (i-1)*r, 0-1);
     pg.triangle(i*r, r*2+1, (i+1)*r, 3*r+1, (i-1)*r, 3*r+1);
   }
-}
-
-//void saveCombinedFaces() {
-//  int r = (resolution+1)/2;
-//  PGraphics finalImg = createGraphics(r*8, r*6);
-//  //for (int i = 0; i < 4; i++) {
-//  int i = 0;
-//  finalImg.beginDraw();
-//  finalImg.background(25);
-//  finalImg.imageMode(CENTER);
-//  finalImg.image(poleFaces[0][i], r*(2*i+1), r*1);
-//  finalImg.image(poleFaces[1][i], r*(2*i+1), r*5);
-//  finalImg.image(faces[0], r*1, r*3);
-//  finalImg.image(faces[1], r*3, r*3);
-//  finalImg.image(faces[2], r*5, r*3);
-//  finalImg.image(faces[3], r*7, r*3);
-//  finalImg.endDraw();
-//  finalImg.save("Test_Faces\\face_combined_"+i+".jpeg");
-//  //}
-//}
-
-PImage rotateImage(PImage img, int rotationID) {
-  color[][] dummy;
-  PImage out;
-  int index = 0;
-  img.loadPixels();
-
-  if (rotationID == 1 || rotationID == 3) {
-    dummy = new color[img.height][img.width];
-    out = createImage(img.height, img.width, RGB);
-  } else if (rotationID == 2) {
-    dummy = new color[img.width][img.height];
-    out = createImage(img.width, img.height, RGB);
-  } else {
-    if (rotationID != 0) {
-      println("ERROR with 'rotateImage'. The rotationID ("+rotationID+") is invalid");
-    }
-    return img;
-  }
-
-  for (int r = 0; r < img.height; r++) {
-    for (int c = 0; c < img.width; c++) {
-      switch(rotationID) {
-      case 1:
-        dummy[img.height-r-1][c] = img.pixels[index];
-        break;
-      case 2:
-        dummy[img.width-c-1][img.height-r-1] = img.pixels[index];
-        break;
-      case 3:
-        dummy[r][img.width-c-1] = img.pixels[index];
-        break;
-      }
-      index++;
-    }
-  }
-  img.updatePixels();
-  
-  out.loadPixels();
-  index = 0;
-  for (int r = 0; r < out.height; r++) {
-    for (int c = 0; c < out.width; c++) {
-      out.pixels[index] = dummy[c][r];
-      index++;
-    }
-  }
-  out.updatePixels();
-
-  return out;
-}
-
-int rotGridX(int x, int y, int gridSize, int rot) {    //rot is the rotation amount (0 is normal, 1 is 90 deg cw, 2 is 180 deg, and 3 is 90 deg ccw
-  int out = 0;
-
-  switch (rot) {
-  case 0:
-    out = x;
-    break;
-  case 1:
-    out = gridSize - y;
-    break;
-  case 2:
-    out = gridSize - x;
-    break;
-  case 3:
-    out = y;
-    break;
-  default:
-    println("Error in 'rotGridX' for variable rot. It is '"+rot+"'");
-  }
-
-  return out;
-}
-
-int rotGridY(int x, int y, int gridSize, int rot) {    //rot is the rotation amount (0 is normal, 1 is 90 deg cw, 2 is 180 deg, and 3 is 90 deg ccw
-  int out = 0;
-
-  switch (rot) {
-  case 0:
-    out = y;
-    break;
-  case 1:
-    out = x;
-    break;
-  case 2:
-    out = gridSize - y;
-    break;
-  case 3:
-    out = gridSize - x;
-    break;
-  default:
-    println("Error in 'rotGridY' for variable rot. It is '"+rot+"'");
-  }
-
-  return out;
 }
 
 void getShapeCoords() {
@@ -460,61 +310,6 @@ void mouseReleased() {
     axis = 0;
     break;
   }
-}
-
-float true_asin(float v, float x, float y) {
-  float out = asin(v);
-
-  if (x < 0) out = PI-out;
-  else if (y < 0) out += TWO_PI;
-
-  return out;
-}
-
-PVector convert2Map(float x_, float y_, float z_, float R) {
-  float phi, theta;
-
-  phi = acos(z_/R);
-  theta = true_asin(y_/(R*sin(phi)), x_, y_);
-  //theta =+ PI/4;
-  //if (theta > 2*PI) {
-  //  theta -= 2*PI;
-  //}
-
-  return new PVector(900*theta/PI, 900*phi/PI);
-}
-
-PVector[] getVectors(PVector pos) {  //gets the array of PVectors needed for the "dualInterpolate" function
-  int a = (int) pos.x;                      //gets the x location in the upper left of the map coordinate
-  int b = (int) pos.y;                      //gets the y location in the upper left of the map coordinate
-  PVector[] out = new PVector[3];
-
-  out[0] = new PVector(a, b);               //Upper left corner of the square that contains [x,y]
-  out[1] = new PVector(a+1, b+1);           //Bottom right corner of the square that contains [x,y]
-  out[2] = new PVector(pos.x, pos.y);       //Position [x,y]
-
-  return out;
-}
-
-float dualInterpolate(PVector[] positions, float v1, float v2, float v3, float v4) {  //positions: [0] low, [1] high, [2] pos
-  float top, bottom;
-
-  if (v1 == v2) {
-    top = v1;
-  } else {
-    top = map(positions[2].x, positions[0].x, positions[1].x, v1, v2);
-  }
-
-  if (v3 == v4) {
-    bottom = v3;
-  } else {
-    bottom = map(positions[2].x, positions[0].x, positions[1].x, v3, v4);
-  }
-
-  if (top == bottom) {
-    return top;
-  }
-  return map(positions[2].y, positions[0].y, positions[1].y, top, bottom);
 }
 
 //float dualInterpolate(float x1, float x2, float y1, float y2, float posX, float posY, float v1, float v2, float v3, float v4) {
